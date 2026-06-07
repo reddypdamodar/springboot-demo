@@ -24,15 +24,15 @@ pipeline {
             steps {
                 bat '''
                 for /f "tokens=5" %%a in ('netstat -ano ^| findstr :8081') do taskkill /F /PID %%a
+                exit /b 0
                 '''
             }
         }
 
-        stage('Stop Existing App') {
+        stage('Deploy') {
             steps {
                 bat '''
-                for /f "tokens=5" %%a in ('netstat -ano ^| findstr :8081') do taskkill /F /PID %%a
-                exit /b 0
+                start /B java -jar target\\demo-0.0.1-SNAPSHOT.jar
                 '''
             }
         }
