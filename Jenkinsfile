@@ -20,15 +20,31 @@ pipeline {
             }
         }
 
+        stage('Stop Existing App') {
+            steps {
+                bat '''
+                for /f "tokens=5" %%a in ('netstat -ano ^| findstr :8081') do taskkill /F /PID %%a
+                '''
+            }
+        }
+
+        stage('Stop Existing App') {
+            steps {
+                bat '''
+                for /f "tokens=5" %%a in ('netstat -ano ^| findstr :8081') do taskkill /F /PID %%a
+                exit /b 0
+                '''
+            }
+        }
     }
 
     post {
         success {
-            echo 'Build Successful'
+            echo 'Deployment Successful'
         }
 
         failure {
-            echo 'Build Failed'
+            echo 'Deployment Failed'
         }
     }
 }

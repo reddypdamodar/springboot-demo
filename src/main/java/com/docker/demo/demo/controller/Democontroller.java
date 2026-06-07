@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class Democontroller {
     @GetMapping("/dockerdemo")
     public String methodname (){
-        return "this is docker demo v2";
+        return "this is cicd demo";
     }
 }
