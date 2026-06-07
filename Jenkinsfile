@@ -8,15 +8,6 @@ pipeline {
 
     stages {
 
-        stage('Stop Existing App') {
-            steps {
-                bat '''
-                for /f "tokens=5" %%a in ('netstat -ano ^| findstr :8081') do taskkill /F /PID %%a
-                exit /b 0
-                '''
-            }
-        }
-
         stage('Build') {
             steps {
                 bat 'mvn clean package'
@@ -29,10 +20,11 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy Artifact') {
             steps {
                 bat '''
-                start "SpringBootApp" java -jar target\\demo-0.0.1-SNAPSHOT.jar
+                if not exist C:\\deployments mkdir C:\\deployments
+                copy /Y target\\demo-0.0.1-SNAPSHOT.jar C:\\deployments\\demo.jar
                 '''
             }
         }
@@ -40,11 +32,11 @@ pipeline {
 
     post {
         success {
-            echo 'Deployment Successful'
+            echo 'Build, Test and Deployment Successful'
         }
 
         failure {
-            echo 'Deployment Failed'
+            echo 'Pipeline Failed'
         }
     }
 }
