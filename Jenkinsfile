@@ -32,8 +32,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 bat '''
-                timeout /t 5 /nobreak > nul
-                start "SpringBootApp" /B java -jar target\\demo-0.0.1-SNAPSHOT.jar
+                start "SpringBootApp" java -jar target\\demo-0.0.1-SNAPSHOT.jar
                 '''
             }
         }
