@@ -8,13 +8,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git branch: 'main',
-                    url: 'YOUR_GITHUB_REPO_URL'
-            }
-        }
-
         stage('Build') {
             steps {
                 bat 'mvn clean package'
@@ -26,6 +19,7 @@ pipeline {
                 bat 'mvn test'
             }
         }
+
     }
 
     post {
